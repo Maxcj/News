@@ -1,7 +1,8 @@
 # News
 新闻管理系统，Nutz、SSH、SSM
 
-项目整理中、持续更新
+演示地址：http://maxcj.cn:8080/15436303/
+
 
 
 * UI：EasyUI、Bootstrap页面布局

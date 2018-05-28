@@ -1,0 +1,74 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/db15436303?serverTimezone=Hongkong">
+		</property>
+		<property name="username" value="root"></property>
+		<property name="password" value="admin"></property>
+	</bean>
+
+	<context:annotation-config />
+
+	<!-- 配置SqlSessionFactory对象 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 注入数据库连接池 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 配置MyBaties全局配置文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<!-- 扫描entity包,使用别名 -->
+		<property name="typeAliasesPackage" value="cn.zcj.newsssm.entity" />
+		<!-- 自动扫描sql配置文件:mapper需要的xml文件 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml" />
+	</bean>
+
+	<!-- 配置扫描Dao接口包，动态实现Dao接口，注入到spring容器 中 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 注入sqlSessionFactory -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<!-- 给出需要扫描Dao接口包 -->
+		<property name="basePackage" value="cn.zcj.newsssm.dao" />
+	</bean>
+
+	<context:component-scan base-package="cn.zcj.newsssm.service" />
+
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="txManager" />
+
+
+	<context:component-scan base-package="cn.zcj.newsssm.web" />
+	<!-- 开启RequestMapping 注解 -->
+	<mvc:annotation-driven />
+	<!-- 启用静态资源默认Servlet配置 (1)加入对静态资源的处理：js,css,jpg,gif,png等 (2)允许使用"/"做整体映射 -->
+	<mvc:default-servlet-handler />
+	<!-- 配置jsp视图解析器 -->
+
+	<bean class ="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">    
+		<!-- 定义视图存放路径 -->
+		<property name="prefix" value="/WEB-INF/web/" />
+		<!-- 定义视图后缀 -->
+		<property name="suffix" value=".jsp" />
+
+	</bean>
+
+
+
+</beans>

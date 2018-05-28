@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.zcj.newsssm.dao.CommentDao">
+	<insert id="add" parameterType="Comment">
+		insert into comment (id,username, ccontent, cdate) value(#{id},#{username},#{ccontent},#{cdate})
+	</insert>
+	
+	<select id="list" parameterType="int" resultType="cn.zcj.newsssm.entity.Comment">
+		select * from comment where	id = #{id}
+	</select>
+	
+	<select id="countofComment" parameterType="int" resultType="int">
+		select count(*) from comment where id = #{id} 
+	</select>
+
+</mapper>

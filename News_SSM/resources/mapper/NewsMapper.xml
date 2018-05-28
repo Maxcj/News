@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.zcj.newsssm.dao.NewsDao">
+	<insert id="add" parameterType="News">
+		insert into news ( title, content, date, cruser, hitnum ) values (#{title}, #{content}, #{date}, #{cruser}, #{hitnum})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from news where id = #{id}
+	</delete>
+	
+	<update id="update" parameterType="News">
+		update news set title = #{title}, content = #{content}, cruser = #{cruser}, hitnum = #{hitnum} where id = #{id}
+	</update>
+	
+	<select id="get1" resultType="News">
+		select * from news where id = #{id}
+	</select>
+	
+	<select id="list3" resultType="News">
+		select * from news order by id desc limit ${offset}, ${rows}
+	</select>
+	
+	<select id="list4" resultType="News">
+		select * from news
+		<where>title like '%${s1}%'</where>
+		<where>order by id desc limit ${offset}, ${rows}</where>
+	</select>
+	
+	<select id="countofNews" resultType="Long">
+		select count(*) from news
+	</select> 
+
+</mapper>

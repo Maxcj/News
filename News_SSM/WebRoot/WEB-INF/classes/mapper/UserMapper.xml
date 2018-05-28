@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.zcj.newsssm.dao.UserDao">
+	<insert id="add" parameterType="User">
+		insert into user (uid,xm,pwd,bj,role) value(#{uid},#{xm},#{pwd},#{bj},#{role})
+	</insert>
+	
+	<select id="get2" resultType="User">
+		select * from user
+		<where>uid = #{s1} and pwd = #{s2}</where>
+	</select>
+	
+	<select id="countofUser" resultType="long">
+		select count(*) from user
+	</select>
+
+</mapper>
