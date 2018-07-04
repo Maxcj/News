@@ -2,6 +2,7 @@
 新闻管理系统，Nutz、SSH、SSM
 
 SSM演示地址：http://maxcj.cn:8080/NewsSSM/
+后台测试账号：15436303/123
 
 
 
